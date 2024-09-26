@@ -89,22 +89,9 @@ $clientes = obtenerClientes($db);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Clientes</title>
+    <link rel="stylesheet" href="../estilos.css">
     <style>
-        body{
-            font-family: arial;
-        }
-        #listado, #listado td, #listado th {
-            border: 1px solid black;
-            border-collapse: collapse;
-        }
-        
-        #listado td, #listado th {
-            padding: 5px;
-        }
 
-        .centrado{
-            text-align: center;
-        }
     </style>
 </head>
 <body>
