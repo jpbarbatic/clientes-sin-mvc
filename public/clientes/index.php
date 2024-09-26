@@ -1,6 +1,6 @@
 <?php
-define('_EXEC', 1);
-include "../../includes/init.php";
+
+require("../../includes/init.php");
 require('model.php');
 
 // Manejo del formulario para agregar o editar clientes
