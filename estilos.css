@@ -1,0 +1,19 @@
+body{
+    font-family: arial;
+}
+
+h1{
+    color: blue;
+}
+#listado, #listado td, #listado th {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+#listado td, #listado th {
+    padding: 5px;
+}
+
+.centrado{
+    text-align: center;
+}
