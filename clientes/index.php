@@ -1,6 +1,7 @@
 <?php
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
+$basedir="http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF']);
 
 // Conectar a la base de datos SQLite
 try {
@@ -89,53 +90,156 @@ $clientes = obtenerClientes($db);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Clientes</title>
-    <link rel="stylesheet" href="../estilos.css">
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css"/>
     <style>
+        .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+        }
 
+        @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+        }
+
+        .b-example-divider {
+        width: 100%;
+        height: 3rem;
+        background-color: rgba(0, 0, 0, .1);
+        border: solid rgba(0, 0, 0, .15);
+        border-width: 1px 0;
+        box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+        }
+
+        .b-example-vr {
+        flex-shrink: 0;
+        width: 1.5rem;
+        height: 100vh;
+        }
+
+        .bi {
+        vertical-align: -.125em;
+        fill: currentColor;
+        }
+
+        .nav-scroller {
+        position: relative;
+        z-index: 2;
+        height: 2.75rem;
+        overflow-y: hidden;
+        }
+
+        .nav-scroller .nav {
+        display: flex;
+        flex-wrap: nowrap;
+        padding-bottom: 1rem;
+        margin-top: -1px;
+        overflow-x: auto;
+        text-align: center;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+        }
+
+        .btn-bd-primary {
+        --bd-violet-bg: #712cf9;
+        --bd-violet-rgb: 112.520718, 44.062154, 249.437846;
+
+        --bs-btn-font-weight: 600;
+        --bs-btn-color: var(--bs-white);
+        --bs-btn-bg: var(--bd-violet-bg);
+        --bs-btn-border-color: var(--bd-violet-bg);
+        --bs-btn-hover-color: var(--bs-white);
+        --bs-btn-hover-bg: #6528e0;
+        --bs-btn-hover-border-color: #6528e0;
+        --bs-btn-focus-shadow-rgb: var(--bd-violet-rgb);
+        --bs-btn-active-color: var(--bs-btn-hover-color);
+        --bs-btn-active-bg: #5a23c8;
+        --bs-btn-active-border-color: #5a23c8;
+        }
+
+        .bd-mode-toggle {
+        z-index: 1500;
+        }
+
+        .bd-mode-toggle .dropdown-menu .active .bi {
+        display: block !important;
+        }
+        .container{
+            padding-top: 60px;
+        }
     </style>
 </head>
 <body>
-    <h1>Gestión de Clientes</h1>
-
+   
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Gestión2000</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+      <ul class="navbar-nav me-auto mb-2 mb-md-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Inicio</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="<?php echo $basedir ?>">Clientes</a>
+        </li>
+    </div>
+  </div>
+</nav>
+<main class="container">
+    <h2>Gestión de Clientes</h2>
     <!-- Formulario para añadir o editar clientes -->
-    <h2><?= $clienteAEditar ? 'Editar Cliente' : 'Añadir Cliente' ?></h2>
+    <h4><?= $clienteAEditar ? 'Editar Cliente' : 'Añadir Cliente' ?></h4>
 
     <form method="POST" action="index.php">
         <?php if ($clienteAEditar): ?>
             <input type="hidden" name="id" value="<?= htmlspecialchars($clienteAEditar['id']) ?>">
         <?php endif; ?>
-        <table>
-            <tr>
-                <td><label>Nombre: </label></td>
-                <td><input type="text" name="nombre" value="<?= $clienteAEditar ? htmlspecialchars($clienteAEditar['nombre']) : '' ?>" required></td>
-            </tr>
-            <tr>
-                <td><label>Apellidos: </label></td>
-                <td><input type="text" name="apellidos" value="<?= $clienteAEditar ? htmlspecialchars($clienteAEditar['apellidos']) : '' ?>" required></td>
-            </tr>
-            <tr>
-                <td><label>Email: </label></td>
-                <td><input type="email" name="email" value="<?= $clienteAEditar ? htmlspecialchars($clienteAEditar['email']) : '' ?>" required></td>
-            </tr>
-            <tr>
-                <td><label>Teléfono: </label></td>
-                <td><input type="text" name="telefono" value="<?= $clienteAEditar ? htmlspecialchars($clienteAEditar['telefono']) : '' ?>" required></td>
-            </tr>
-            <tr>
-                <td><label>Dirección: </label></td>
-                <td><input type="text" name="direccion" value="<?= $clienteAEditar ? htmlspecialchars($clienteAEditar['direccion']) : '' ?>"></td>
-            </tr>
-            <tr>
-                <td><label>Notas: </label></td>
-                <td><textarea name="notas" style="width: 400px; height: 150px;"><?= $clienteAEditar ? htmlspecialchars($clienteAEditar['notas']) : '' ?></textarea></td>
-            </tr>
-        </table>
-        <button type="submit"><?= $clienteAEditar ? 'Actualizar Cliente' : 'Añadir Cliente' ?></button>
-    </form>
+            <div class="">
+            <div class="row">
+                <div class="form-group col-md-2">
+                    <label>Nombre: </label>
+                    <input class="form-control" type="text" name="nombre" value="<?= $clienteAEditar ? htmlspecialchars($clienteAEditar['nombre']) : '' ?>" required>
+                </div>
+                <div class="form-group col-md-2">
+                    <label>Apellidos: </label>
+                    <input class="form-control" type="text" name="apellidos" value="<?= $clienteAEditar ? htmlspecialchars($clienteAEditar['apellidos']) : '' ?>" required>
+                </div>
+                <div class="form-group col-md-2">
+                    <label>Email: </label>
+                    <input class="form-control" type="email" name="email" value="<?= $clienteAEditar ? htmlspecialchars($clienteAEditar['email']) : '' ?>" required>
+                </div>
+                <div class="form-group col-md-2">
+                    <label>Teléfono: </label>
+                    <input class="form-control" type="text" name="telefono" value="<?= $clienteAEditar ? htmlspecialchars($clienteAEditar['telefono']) : '' ?>" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-4">                
+                    <label>Dirección: </label>
+                    <input class="form-control" type="text" name="direccion" value="<?= $clienteAEditar ? htmlspecialchars($clienteAEditar['direccion']) : '' ?>">
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <label>Notas: </label>
+                    <textarea class="form-control" name="notas"><?= $clienteAEditar ? htmlspecialchars($clienteAEditar['notas']) : '' ?></textarea>
+                </div>
+            </div>
+            </div>
 
+            <button class="btn btn-success" type="submit"><?= $clienteAEditar ? 'Actualizar' : 'Guardar' ?></button>
+    </form>
+<hr class="my-4">
     <!-- Listado de clientes -->
-    <h2>Listado de Clientes</h2>
-    <table id="listado">
+    <h4>Listado de Clientes</h4>
+    <table class="table">
         <thead>
             <tr>
                 <th>ID</th>
@@ -165,6 +269,8 @@ $clientes = obtenerClientes($db);
             <?php endforeach; ?>
         </tbody>
     </table>
+</main>
+
 </body>
 </html>
 
