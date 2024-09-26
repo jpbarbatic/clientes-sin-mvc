@@ -1,10 +1,7 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-$basedir="http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF']);
 define('_EXEC', 1);
-
-require('db.php');
+include "../../includes/init.php";
+require('model.php');
 
 // Manejo del formulario para agregar o editar clientes
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -47,7 +44,7 @@ if (isset($_GET['edit'])) {
 // Obtener todos los clientes para mostrarlos en la tabla
 $clientes = obtenerClientes($db);
 
-include "main.php";
+require("main.php");
 ?>
 
 
